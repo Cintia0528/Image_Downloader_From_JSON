@@ -16,6 +16,8 @@ url_input = st.text_area("Or paste image URLs (one per line)")
 
 # Load JSON
 data = None
+image_urls = []  # Initialize the image_urls list here
+
 if uploaded_file:
     data = json.load(uploaded_file)
 elif json_text:
@@ -30,7 +32,6 @@ if data:
 
     # Extract unique image URLs
     downloaded_urls = set()
-    image_urls = []
 
     for app in data.get("apps", []):
         for key in ["imageUri", "backgroundImageUri"]:
@@ -41,6 +42,7 @@ if data:
 # Process URLs from user input
 if url_input:
     urls = url_input.splitlines()
+    downloaded_urls = set()  # Initialize downloaded_urls here for URL inputs
     for url in urls:
         if url not in downloaded_urls:
             downloaded_urls.add(url)
